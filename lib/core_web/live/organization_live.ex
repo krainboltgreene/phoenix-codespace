@@ -14,7 +14,7 @@ defmodule CoreWeb.OrganizationLive do
 
       record ->
         record
-        |> Core.Repo.preload([:accounts, :worlds])
+        |> Core.Repo.preload([:accounts])
     end
   end
 
@@ -89,15 +89,6 @@ defmodule CoreWeb.OrganizationLive do
       <%= for account <- @record.accounts do %>
         <li>
           <.link patch={~p"/admin/accounts/#{account.id}"}><%= account.username %></.link>
-        </li>
-      <% end %>
-    </ul>
-
-    <h3 id="worlds">Worlds</h3>
-    <ul>
-      <%= for world <- @record.worlds do %>
-        <li>
-          <.link patch={~p"/worlds/#{world.id}"}><%= Pretty.get(world, :name) %></.link>
         </li>
       <% end %>
     </ul>

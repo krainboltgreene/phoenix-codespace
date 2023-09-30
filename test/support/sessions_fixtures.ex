@@ -4,11 +4,6 @@ defmodule Core.SessionsFixtures do
   entities via the `Core.Sessions` context.
   """
 
-  def set_current_world_in_session(%{conn: conn, world: world} = context) do
-    context
-    |> Map.put(:conn, conn |> Plug.Conn.put_session("world_id", world.id))
-  end
-
   def stub_account_session_fetch(context) do
     Mimic.stub(Core.Users, :get_account_by_session_token, fn _ ->
       Map.get(context, :account)

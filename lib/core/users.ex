@@ -10,11 +10,8 @@ defmodule Core.Users do
   use Scaffolding, [Core.Users.Organization, :organizations, :organization]
   use Scaffolding, [Core.Users.Permission, :permissions, :permission]
 
-  def can_read?(%Core.Universes.World{} = record, %Core.Users.Account{} = current_account) do
-    current_account
-    |> Core.Repo.preload([:worlds])
-    |> Map.get(:worlds)
-    |> Enum.member?(record)
+  def can_read?(_record, %Core.Users.Account{} = _current_account) do
+    false
   end
 
   @doc """

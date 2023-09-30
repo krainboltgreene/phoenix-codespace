@@ -269,7 +269,6 @@ defmodule CoreWeb.JobLive do
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Worker</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">State</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Queue</th>
-          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Data</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Attempts</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Started</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold"></th>
@@ -285,25 +284,6 @@ defmodule CoreWeb.JobLive do
           <td class="whitespace-nowrap px-3 py-4 text-sm"><%= job.worker %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm"><%= job.state %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm"><%= job.queue %></td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm">
-            <%= case job.worker do %>
-              <% "Core.Job.GeneratePropertyJob" -> %>
-                <table class="min-w-full divide-y divide-gray-300 my-8">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Core.Randomizer</th>
-                      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Property</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-200">
-                    <tr>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm"><%= job.args["randomizer"] %></td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm"><%= job.args["property"] %></td>
-                    </tr>
-                  </tbody>
-                </table>
-            <% end %>
-          </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm"><%= job.attempt %>/<%= job.max_attempts %></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm"><time datetime={job.inserted_at}><%= Timex.from_now(job.inserted_at) %></time></td>
           <td class="whitespace-nowrap px-3 py-4 text-sm">

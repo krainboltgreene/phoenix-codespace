@@ -109,8 +109,6 @@ defmodule CoreWeb.Router do
   scope "/" do
     pipe_through [:browser, :require_authenticated_account]
 
-    get "/worlds/:id/open", CoreWeb.WorldController, :open
-
     live_session :require_authenticated_account,
       on_mount: [
         {CoreWeb.AccountAuthenticationHelpers, :ensure_authenticated}

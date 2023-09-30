@@ -58,16 +58,4 @@ defmodule Utilities do
   end
 
   def until(function) when is_function(function, 0), do: function.() || until(function)
-
-  @spec put_world_id(String.t() | nil) :: String.t() | nil
-  def put_world_id(world_id) do
-    Process.put(@tenant_key, world_id)
-    |> tap(fn previous_world_id ->
-      Sentry.Context.set_extra_context(%{world_id: world_id, previous_world_id: previous_world_id})
-    end)
-  end
-
-  def get_world_id() do
-    Process.get(@tenant_key)
-  end
 end

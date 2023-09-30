@@ -96,7 +96,6 @@ defmodule CoreWeb.ContentComponents do
   """
   attr :current_account, Core.Users.Account, default: nil
   attr :namespace, :string, required: true
-  attr :world, Core.Universes.World, default: nil
 
   def site_header(assigns) do
     ~H"""
@@ -119,7 +118,6 @@ defmodule CoreWeb.ContentComponents do
       </div>
       <div class="mx-auto px-4">
         <div class="flex flex-wrap h-16">
-          <.site_header_link :if={@current_account} navigate={~p"/worlds"}>Worlds</.site_header_link>
           <.site_header_link :if={Core.Users.has_permission?(@current_account, "global", "administrator")} navigate={~p"/admin"}>
             <%= if @namespace == "admin" do %>
               Dashboard
@@ -130,14 +128,8 @@ defmodule CoreWeb.ContentComponents do
           <.site_header_link :for={{path, name} <- admin_links()} :if={@current_account && @namespace == "admin"} navigate={path}>
             <%= name %>
           </.site_header_link>
-          <.site_header_link :for={{path, name} <- admin_data_links()} :if={@current_account && @namespace == "admin"} navigate={path}>
-            <%= name %>
-          </.site_header_link>
           <.site_header_link :if={@current_account && @namespace == "admin"} navigate={~p"/admin/phoenix"}>
             Phoenix
-          </.site_header_link>
-          <.site_header_link :for={{path, name} <- world_links()} :if={@world && @current_account && @namespace != "admin"} navigate={path}>
-            <%= name %>
           </.site_header_link>
         </div>
       </div>
@@ -167,15 +159,11 @@ defmodule CoreWeb.ContentComponents do
   @doc """
   Renders the site footer.
   """
-  attr :world, Core.Universes.World, default: nil
   attr :current_account, Core.Users.Account, default: nil
 
   def site_footer(assigns) do
     ~H"""
     <footer class="bg-dark-500 text-contrast-500">
-      <div :if={@world} id="current_world_indicator" class="mx-auto w-full max-w-screen-xl">
-        Currently viewing world <.link patch={~p"/worlds/#{@world.id}"}><%= Pretty.get(@world, :name) %></.link>, go <.link navigate={~p"/worlds"}>here</.link> to see other worlds.
-      </div>
       <div class="mx-auto w-full max-w-screen-xl">
         <div class="grid grid-cols-2 gap-8 px-3 py-2">
           <div>
@@ -231,67 +219,10 @@ defmodule CoreWeb.ContentComponents do
   #   ~H"""
   #   """
   # end
-
-  defp world_links,
-    do: [
-      {~p"/worlds/cultures", "Cultures"},
-      {~p"/worlds/religions", "Religions"},
-      {~p"/worlds/pantheons", "Pantheons"},
-      {~p"/worlds/locations", "Locations"},
-      {~p"/worlds/groups", "Groups"},
-      {~p"/worlds/people", "People"},
-      {~p"/worlds/artifacts", "Artifacts"},
-      {~p"/worlds/adventures", "Adventures"},
-      {~p"/worlds/encounters", "Encounters"}
-    ]
-
   defp admin_links(),
     do: [
       {~p"/admin/accounts", "Accounts"},
       {~p"/admin/organizations", "Organizations"},
-      {~p"/admin/jobs", "Jobs"},
-      {~p"/admin/gpu_servers", "GPUs"},
-      {~p"/admin/image_batches", "Image Batches"}
-    ]
-
-  defp admin_data_links(),
-    do: [
-      {~p"/admin/archetype_options", "Archetype Options"},
-      {~p"/admin/asset_options", "Asset Options"},
-      {~p"/admin/background_options", "Background Options"},
-      {~p"/admin/cultural_art_options", "Cultural Art Options"},
-      {~p"/admin/cultural_ethos_options", "Cultural Ethos Options"},
-      {~p"/admin/cultural_gender_preference_options", "Cultural Gender Preference Options"},
-      {~p"/admin/cultural_phase_options", "Cultural Phase Options"},
-      {~p"/admin/cultural_pillar_options", "Cultural Pillar Options"},
-      {~p"/admin/cultural_scale_options", "Cultural Scale Options"},
-      {~p"/admin/cultural_society_options", "Cultural Society Options"},
-      {~p"/admin/encounter_context_options", "Encounter Context Options"},
-      {~p"/admin/gender_identity_options", "Gender Identity Options"},
-      {~p"/admin/gender_presentation_options", "Gender Presentation Options"},
-      {~p"/admin/group_age_options", "Group Age Options"},
-      {~p"/admin/group_goal_options", "Group Goal Options"},
-      {~p"/admin/group_scope_options", "Group Scope Options"},
-      {~p"/admin/group_size_options", "Group Size Options"},
-      {~p"/admin/location_development_options", "Location Development Options"},
-      {~p"/admin/location_embellishment_options", "Location Embellishment Options"},
-      {~p"/admin/location_founding_options", "Location Founding Options"},
-      {~p"/admin/monsters", "Monsters"},
-      {~p"/admin/objective_options", "Objective Options"},
-      {~p"/admin/person_appearance_options", "Person Appearance Options"},
-      {~p"/admin/person_role_options", "Person Role Options"},
-      {~p"/admin/person_type_options", "Person Type Options"},
-      {~p"/admin/race_options", "Race Options"},
-      {~p"/admin/religion_value_options", "Religion Value Options"},
-      {~p"/admin/room_detail_options", "Room Detail Options"},
-      {~p"/admin/trait_options", "Trait Options"},
-      {~p"/admin/trap_bait_options", "Trap Bait Options"},
-      {~p"/admin/trap_effect_options", "Trap Effect Options"},
-      {~p"/admin/trap_lethality_options", "Trap Lethality Options"},
-      {~p"/admin/trap_location_options", "Trap Location Options"},
-      {~p"/admin/trap_purpose_options", "Trap Purpose Options"},
-      {~p"/admin/trap_reset_options", "Trap Reset Options"},
-      {~p"/admin/trap_trigger_options", "Trap Trigger Options"},
-      {~p"/admin/trap_type_options", "Trap Type Options"}
+      {~p"/admin/jobs", "Jobs"}
     ]
 end

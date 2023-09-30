@@ -21,18 +21,6 @@ defmodule CoreWeb.AdminPageLive do
       |> (&{:noreply, &1}).()
     else
       socket
-      |> assign(
-        :generation_by_world,
-        if params["insight"] == "tree" do
-          tree()
-        end
-      )
-      |> assign(
-        :generation_errors,
-        if params["insight"] == "errors" do
-          errors()
-        end
-      )
       |> assign(:insight, params["insight"])
       |> (&{:noreply, &1}).()
     end

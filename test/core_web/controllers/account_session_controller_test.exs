@@ -19,7 +19,7 @@ defmodule CoreWeb.AccountSessionControllerTest do
         })
 
       assert get_session(conn, :account_token)
-      assert redirected_to(conn) == ~p"/worlds/"
+      assert redirected_to(conn) == ~p"/"
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
@@ -40,14 +40,14 @@ defmodule CoreWeb.AccountSessionControllerTest do
         })
 
       assert conn.resp_cookies["_core_web_account_remember_me"]
-      assert redirected_to(conn) == ~p"/worlds/"
+      assert redirected_to(conn) == ~p"/"
     end
 
     # TODO: Implement this feature at some point
     test "logs the account in with return to", %{conn: conn, account: account} do
       conn =
         conn
-        |> init_test_session(account_return_to: "/worlds")
+        |> init_test_session(account_return_to: ~p"/")
         |> post(~p"/accounts/log_in", %{
           "account" => %{
             "email_address" => account.email_address,
@@ -55,7 +55,7 @@ defmodule CoreWeb.AccountSessionControllerTest do
           }
         })
 
-      assert redirected_to(conn) == "/worlds/"
+      assert redirected_to(conn) == ~p"/"
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Welcome back!"
     end
 
@@ -70,7 +70,7 @@ defmodule CoreWeb.AccountSessionControllerTest do
           }
         })
 
-      assert redirected_to(conn) == ~p"/worlds/"
+      assert redirected_to(conn) == ~p"/"
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Account created successfully"
     end
 

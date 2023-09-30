@@ -3,7 +3,7 @@ defmodule CoreWeb.AccountSessionController do
 
   def create(conn, %{"_action" => "registered"} = params) do
     conn
-    |> put_session(:account_return_to, ~p"/worlds/")
+    |> put_session(:account_return_to, ~p"/")
     |> create(params, "Account created successfully!")
   end
 
@@ -15,7 +15,7 @@ defmodule CoreWeb.AccountSessionController do
 
   def create(conn, params) do
     conn
-    |> put_session(:account_return_to, ~p"/worlds/")
+    |> put_session(:account_return_to, ~p"/")
     |> create(params, "Welcome back!")
   end
 
@@ -57,7 +57,7 @@ defmodule CoreWeb.AccountSessionController do
          {:ok, _confirmation} <- Core.Users.confirm_account(encoded_token) do
       conn
       |> put_flash(:info, "Successfully authenticated.")
-      |> CoreWeb.AccountAuthenticationHelpers.log_in_account(account, %{return_to: ~p"/worlds/"})
+      |> CoreWeb.AccountAuthenticationHelpers.log_in_account(account, %{return_to: ~p"/"})
       |> configure_session(renew: true)
     else
       :error ->
