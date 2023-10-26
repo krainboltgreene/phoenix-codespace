@@ -44,7 +44,7 @@ defmodule Core.MixProject do
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.20.0"},
-      {:floki, "~> 0.34.0", only: :test},
+      {:floki, "~> 0.35.2", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.0"},
       {:esbuild, "~> 0.7.0", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
