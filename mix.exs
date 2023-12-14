@@ -67,7 +67,7 @@ defmodule Core.MixProject do
       {:slugy, "~> 4.1"},
       {:oban, "~> 2.14"},
       {:hackney, "~> 1.18"},
-      {:sentry, "~> 9.0"},
+      {:sentry, "~> 10.1"},
       {:timex, "~> 3.7"},
       {:estate, "~> 1.0"},
       {:ex_doc, "~> 0.27", only: :dev, runtime: false},
